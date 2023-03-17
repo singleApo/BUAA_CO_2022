@@ -10,9 +10,9 @@ Verilog syntax
 ## P2
 MIPS syntax
 ## P3
-Single-cycle Processor on Logisim
+Single-Cycle Processor on Logisim
 ## P4
-Single-cycle Processor on Verilog
+Single-Cycle Processor on Verilog
 ## P5
 simple Pipeline Processor on Verilog
 ## P6
