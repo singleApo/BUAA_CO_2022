@@ -4,7 +4,7 @@ Computer Organization course design of Beihang University
 ## pre
 simple tests of 3 tools
 ## P0
-Logisim usage method
+Logisim usage
 ## P1
 Verilog syntax
 ## P2
