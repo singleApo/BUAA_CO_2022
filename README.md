@@ -1,5 +1,5 @@
-# BUAA_CO
-Computer Organization course design of Beihang University
+# BUAA_CO_2022
+Computer Organization course design of Beihang University in fall 2022
 > The author will not be responsible if your grade is cancelled due to **plagiarism**.
 ## pre
 simple tests of 3 tools
