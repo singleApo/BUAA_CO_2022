@@ -29,18 +29,19 @@ module CMP(
     );
     reg out;
 	 
-	 always@(*) begin
-		  case (CMPOp)
-			   `CMP_BEQ : begin
+	always @(*) begin
+		case (CMPOp)
+			`CMP_BEQ: begin
                 out = (c1 == c2);
             end
-            `CMP_BNE : begin
+            `CMP_BNE: begin
                 out = (c1 != c2);
             end
             
             default: ; 
         endcase
     end
-	 assign CMPOut = out;
+
+	assign CMPOut = out;
 
 endmodule

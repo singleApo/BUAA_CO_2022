@@ -22,36 +22,36 @@
 `default_nettype none
 
 module MulDiv(
-	 input wire clk,
-	 input wire reset,
-	 input wire [31:0] a,
-	 input wire [31:0] b,
-	 input wire [3:0] MDUOp,
-	 output wire [31:0] out,
-	 output wire Busy
+	input wire clk,
+	input wire reset,
+	input wire [31:0] a,
+	input wire [31:0] b,
+	input wire [3:0] MDUOp,
+	output wire [31:0] out,
+	output wire Busy
     );
-	 reg busy;
-	 reg [31:0] HI;
-	 reg [31:0] HI_tmp;
-	 reg [31:0] LO;
-	 reg [31:0] LO_tmp;
-	 reg [31:0] count;
+	reg busy;
+	reg [31:0] HI;
+	reg [31:0] HI_tmp;
+	reg [31:0] LO;
+	reg [31:0] LO_tmp;
+	reg [31:0] count;
 	 
-	 assign out = (MDUOp == `MDU_MFHI) ? HI : 
-                 (MDUOp == `MDU_MFLO) ? LO : 0;
-	 assign Busy = busy;
-					  
-	 always @(posedge clk) begin
-        if(reset) begin
-            HI <= 0;
-            LO <= 0;
-            HI_tmp <= 0;
-            LO_tmp <= 0;
-				count <= 0;
-				busy <= 0;
-        end
-        else if(count == 0) begin
-			case(MDUOp)
+	assign out = (MDUOp == `MDU_MFHI) ? HI : 
+				(MDUOp == `MDU_MFLO) ? LO : 0;
+	assign Busy = busy;
+					
+	always @(posedge clk) begin
+		if (reset) begin
+			HI <= 0;
+			LO <= 0;
+			HI_tmp <= 0;
+			LO_tmp <= 0;
+			count <= 0;
+			busy <= 0;
+		end
+		else if (count == 0) begin
+			case (MDUOp)
 				`MDU_MTHI: begin 
 					HI <= a;
 				end
@@ -82,18 +82,18 @@ module MulDiv(
 					count <= 0;
 				end
 			endcase
-        end
-        
-		  else if(count == 1) begin
-				busy <= 0;
-				count <= 0;
-				HI <= HI_tmp;
-				LO <= LO_tmp;
-		  end
-		  
-		  else begin
-            count <= count - 1;
-        end
-	 end
+		end
+		
+		else if (count == 1) begin
+			busy <= 0;
+			count <= 0;
+			HI <= HI_tmp;
+			LO <= LO_tmp;
+		end
+		
+		else begin
+			count <= count - 1;
+		end
+	end
 
 endmodule

@@ -26,11 +26,11 @@ module alu(
     );
 	
 	assign C = (ALUOp == 3'b000) ? A + B :
-			    (ALUOp == 3'b001) ? A - B :
-				(ALUOp == 3'b010) ? A & B :
-				(ALUOp == 3'b011) ? A | B : 
-				(ALUOp == 3'b100) ? A >> B :
-				(ALUOp == 3'b101) ? $signed($signed(A) >>> B) :
-				3'b000;	// error
+			(ALUOp == 3'b001) ? A - B :
+			(ALUOp == 3'b010) ? A & B :
+			(ALUOp == 3'b011) ? A | B : 
+			(ALUOp == 3'b100) ? A >> B :
+			(ALUOp == 3'b101) ? $signed($signed(A) >>> B) :
+			3'b000;	// error
 
 endmodule

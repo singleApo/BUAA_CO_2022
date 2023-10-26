@@ -24,8 +24,9 @@ module comp(
 	input [3:0] a,
 	input [3:0] b,
 	output ans1,
-   output ans2
+	output ans2
    );
+   
    assign ans1 = a > b;
    assign ans2 = $signed(a) > $signed(b);
 

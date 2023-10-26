@@ -22,7 +22,6 @@
 `default_nettype none
 
 module Hazard(
-	
 	input wire [1:0] Tnew_E,
 	input wire [1:0] Tnew_M,
 	input wire [1:0] Tnew_W,
@@ -69,11 +68,11 @@ module Hazard(
 	wire stall_md;
 
 	 
-	assign Tuse_rs0 = (op == `BEQ)|(op == `BNE)|((op == 0)&(func == `JR));
-	assign Tuse_rs1 = ((op == 0)&((func == `ADD)|(func == `SUB)|(func == `AND)|(func == `OR)|(func == `SLT)|(func == `SLTU)|(func == `MULT)|(func == `MULTU)|(func == `DIV)|(func == `DIVU)|(func == `MTHI)|(func == `MTLO)))|(op == `ADDI)|(op == `ANDI)|(op == `ORI)|(op == `LUI)|(op == `LW)|(op == `LH)|(op == `LB)|(op == `SW)|(op == `SH)|(op == `SB);
-	assign Tuse_rt0 = (op == `BEQ)|(op == `BNE);
-	assign Tuse_rt1 = (op == 0)&((func == `ADD)|(func == `SUB)|(func == `AND)|(func == `OR)|(func == `SLT)|(func == `SLTU)|(func == `MULT)|(func == `MULTU)|(func == `DIV)|(func == `DIVU));
-	assign Tuse_rt2 = (op == `SW)|(op == `SH)|(op == `SB);
+	assign Tuse_rs0 = (op == `BEQ) | (op == `BNE) | ((op == 0) & (func == `JR));
+	assign Tuse_rs1 = ((op == 0) & ((func == `ADD) | (func == `SUB) | (func == `AND) | (func == `OR) | (func == `SLT) | (func == `SLTU) | (func == `MULT) | (func == `MULTU) | (func == `DIV) | (func == `DIVU) | (func == `MTHI) | (func == `MTLO))) | (op == `ADDI) | (op == `ANDI) | (op == `ORI) | (op == `LUI) | (op == `LW) | (op == `LH) | (op == `LB) | (op == `SW) | (op == `SH) | (op == `SB);
+	assign Tuse_rt0 = (op == `BEQ) | (op == `BNE);
+	assign Tuse_rt1 = (op == 0) & ((func == `ADD) | (func == `SUB) | (func == `AND) | (func == `OR) | (func == `SLT) | (func == `SLTU) | (func == `MULT) | (func == `MULTU) | (func == `DIV) | (func == `DIVU));
+	assign Tuse_rt2 = (op == `SW) | (op == `SH) | (op == `SB);
 	
 	assign stall_rs0_E1 = Tuse_rs0 & (Tnew_E == 1) & (rs_D == WriteReg_E) & RegWrite_E & (rs_D != 0);
 	assign stall_rs0_E2 = Tuse_rs0 & (Tnew_E == 2) & (rs_D == WriteReg_E) & RegWrite_E & (rs_D != 0);
@@ -90,19 +89,19 @@ module Hazard(
 	assign stall_md = (MDUOp != `MDU_NONE) & (start | busy);
 	assign stall = stall_rs | stall_rt | stall_md;
 
-   assign forward_CMP1 = (rs_D == WriteReg_E && rs_D != 0 && Tnew_E == 0 && RegWrite_E == 1) ? 2'b11 :
-								 (rs_D == WriteReg_M && rs_D != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
-								 (rs_D == WriteReg_W && rs_D != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
+    assign forward_CMP1 = (rs_D == WriteReg_E && rs_D != 0 && Tnew_E == 0 && RegWrite_E == 1) ? 2'b11 :
+						(rs_D == WriteReg_M && rs_D != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
+						(rs_D == WriteReg_W && rs_D != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
 								  
 	assign forward_CMP2 = (rt_D == WriteReg_E && rt_D != 0 && Tnew_E == 0 && RegWrite_E == 1) ? 2'b11 :
-								 (rt_D == WriteReg_M && rt_D != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
-								 (rt_D == WriteReg_W && rt_D != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
+						(rt_D == WriteReg_M && rt_D != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
+						(rt_D == WriteReg_W && rt_D != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
 								 
-   assign forward_ALU1 = (rs_E == WriteReg_M && rs_E != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
-								 (rs_E == WriteReg_W && rs_E != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
+    assign forward_ALU1 = (rs_E == WriteReg_M && rs_E != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
+						(rs_E == WriteReg_W && rs_E != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
 							
 	assign forward_ALU2 = (rt_E == WriteReg_M && rt_E != 0 && Tnew_M == 0 && RegWrite_M == 1) ? 2'b10 :
-								 (rt_E == WriteReg_W && rt_E != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
+						(rt_E == WriteReg_W && rt_E != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 2'b01 : 2'b00;
 	
 	assign forward_DM = (rt_M == WriteReg_W && rt_M != 0 && Tnew_W == 0 && RegWrite_W == 1) ? 1'b1 : 1'b0;
 

@@ -19,22 +19,23 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 module blocked_and_non_blocked(
-    input clk,
-    input a,
-    output reg b_blocked,
-    output reg c_blocked,
-    output reg b_non_blocked,
-    output reg c_non_blocked
-    );
+   input clk,
+   input a,
+   output reg b_blocked,
+   output reg c_blocked,
+   output reg b_non_blocked,
+   output reg c_non_blocked
+   );
 
-     // ×èÈû¸³Öµ
-     always @(posedge clk) begin
-        b_blocked = a;
-        c_blocked = b_blocked;
-     end
-     // ·Ç×èÈû¸³Öµ
-     always @(posedge clk) begin
-        b_non_blocked <= a;
-        c_non_blocked <= b_non_blocked;
-     end
+   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+   always @(posedge clk) begin
+      b_blocked = a;
+      c_blocked = b_blocked;
+   end
+   // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Öµ
+   always @(posedge clk) begin
+      b_non_blocked <= a;
+      c_non_blocked <= b_non_blocked;
+   end
+
 endmodule
