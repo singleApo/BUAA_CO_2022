@@ -19,17 +19,17 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 `default_nettype none
+
 module mips(
     input wire clk,
     input wire reset
     );
-
-	 wire [31:0] pc;
-	 wire [31:0] npc;
-	 wire [31:0] PC4;
-	 wire zero;
-	 wire bne_zero;
-	 wire [31:0] instr;
+    wire [31:0] pc;
+    wire [31:0] npc;
+    wire [31:0] PC4;
+    wire zero;
+    wire bne_zero;
+    wire [31:0] instr;
 	 
     wire [5:0] op;
     wire [4:0] rs;
@@ -39,18 +39,18 @@ module mips(
     wire [15:0] Imm16;
     wire [25:0] Imm26;
 	 
-	 wire [31:0] RD1;
-	 wire [31:0] RD2;
-	 wire [4:0] mux1;
-	 wire [31:0] mux2;
-	 wire [31:0] mux3;
-	 wire [31:0] ALUOut;
-	 wire [31:0] EXTOut;
-	 wire [31:0] MemOut;
+    wire [31:0] RD1;
+    wire [31:0] RD2;
+    wire [4:0] mux1;
+    wire [31:0] mux2;
+    wire [31:0] mux3;
+    wire [31:0] ALUOut;
+    wire [31:0] EXTOut;
+    wire [31:0] MemOut;
 	 
 	 
-	 wire RegWrite;
-	 wire RegWrite2;
+    wire RegWrite;
+    wire RegWrite2;
     wire [1:0] RegDst;
     wire ALUSrc;
     wire MemWrite;
@@ -67,43 +67,43 @@ module mips(
     assign Imm26 = instr[25:0];
     assign Imm16 = instr[15:0];
 	
-	 assign mux1 = (RegDst == 2'b00) ? rt :
+	assign mux1 = (RegDst == 2'b00) ? rt :
                   (RegDst == 2'b01) ? rd :
                   (RegDst == 2'b10) ? 31 : 0;
 	 
-	 assign mux2 = (ALUSrc == 1'b0) ? RD2 :
+	assign mux2 = (ALUSrc == 1'b0) ? RD2 :
                   (ALUSrc == 1'b1) ? EXTOut : 0;
 					
-	 assign mux3 = (WDSrc == 2'b00) ? ALUOut :
+	assign mux3 = (WDSrc == 2'b00) ? ALUOut :
                   (WDSrc == 2'b01) ? MemOut :
                   (WDSrc == 2'b10) ? PC4 : 0;
 						
-	 assign RegWrite2 = RegWrite & (~bne_zero);
+	assign RegWrite2 = RegWrite & (~bne_zero);
 	 
-	 PC pc1 (
+	PC pc1 (
     .clk(clk), 
     .reset(reset), 
     .in(npc), 
     .out(pc)
     );
 	 
-	 NPC npc1 (
+	NPC npc1 (
     .in(pc), 
     .Imm26(Imm26), 
     .RA(RD1), 
     .NPCOp(NPCOp), 
     .zero(zero),
-	 .bne_zero(bne_zero),
+	.bne_zero(bne_zero),
     .PC4(PC4), 
     .out(npc)
     );
 	 
-	 IM rom (
+	IM rom (
     .in(pc), 
     .instr(instr)
     );
 	 
-	 GRF grf32 (
+	GRF grf32 (
     .clk(clk), 
     .reset(reset), 
     .RegWrite(RegWrite2), 
@@ -116,7 +116,7 @@ module mips(
     .RD2(RD2)
     );
 	 
-	 CTRL ctrl (
+	CTRL ctrl (
     .op(op), 
     .func(func), 
     .RegWrite(RegWrite), 
@@ -129,22 +129,22 @@ module mips(
     .EXTOp(EXTOp)
     );
 
-	 ALU alu (
+	ALU alu (
     .a(RD1), 
     .b(mux2), 
     .ALUOp(ALUOp), 
     .ALUResult(ALUOut), 
     .zero(zero),
-	 .bne_zero(bne_zero)
+	.bne_zero(bne_zero)
     );
 	 
-	 EXT ext (
+	EXT ext (
     .Imm16(Imm16), 
     .EXTOp(EXTOp), 
     .EXTResult(EXTOut)
     );
 
-	 DM ram (
+	DM ram (
     .in(RD2), 
     .addr(ALUOut), 
     .MemWrite(MemWrite), 

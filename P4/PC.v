@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 `default_nettype none
+
 module PC(
     input wire clk,
     input wire reset,
@@ -29,7 +30,7 @@ module PC(
     assign out = tmp;
 
     always @(posedge clk) begin
-        if(reset) begin
+        if (reset) begin
             tmp <= 32'h00003000;
         end
         else begin

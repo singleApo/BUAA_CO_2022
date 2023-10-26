@@ -26,8 +26,8 @@ module NPC(
     input wire [25:0] Imm26,
     input wire [31:0] RA,
     input wire [2:0] NPCOp,
-	 input wire zero,
-	 input wire bne_zero,
+	input wire zero,
+	input wire bne_zero,
     output wire [31:0] PC4,
     output wire [31:0] out
     );
@@ -36,28 +36,28 @@ module NPC(
     assign PC4 = in + 4;
     assign out = tmp;
 
-    always@(*) begin
+    always @(*) begin
 		case (NPCOp)
-			   `NPC_PC4 : begin
+			`NPC_PC4: begin
                 tmp = in + 4;
             end
-            `NPC_BEQ : begin
-                if(zero) begin
-                    tmp = in + 4 + {{14{Imm26[15]}},Imm26[15:0],2'b00};
+            `NPC_BEQ: begin
+                if (zero) begin
+                    tmp = in + 4 + {{14{Imm26[15]}}, Imm26[15:0], 2'b00};
                 end
                 else begin
                     tmp = in + 4;
                 end
             end
-            `NPC_JAL : begin
-                tmp = {in[31:28],Imm26,2'b00};
+            `NPC_JAL: begin
+                tmp = {in[31:28], Imm26, 2'b00};
             end
-            `NPC_JR : begin
+            `NPC_JR: begin
                 tmp = RA;
             end
-				`NPC_BNEZALC : begin
-                if(bne_zero == 0) begin
-                    tmp = in + 4 + {{14{Imm26[15]}},Imm26[15:0],2'b00};
+			`NPC_BNEZALC: begin
+                if (bne_zero == 0) begin
+                    tmp = in + 4 + {{14{Imm26[15]}}, Imm26[15:0], 2'b00};
                 end
                 else begin
                     tmp = in + 4;

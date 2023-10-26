@@ -27,43 +27,43 @@ module ALU(
     input wire [2:0] ALUOp,
     output wire [31:0] ALUResult,
     output wire zero,
-	 output wire bne_zero
+	output wire bne_zero
     );
-	 reg [31:0] rev;
-	 reg [31:0] tmp;
-	 wire [4:0] imm;
-	 assign imm = b[4:0];
-	 integer i;
-	 
-    always@(*) begin
+    reg [31:0] rev;
+    reg [31:0] tmp;
+    wire [4:0] imm;
+    assign imm = b[4:0];
+
+    integer i; 
+    always @(*) begin
 		case (ALUOp)
-			   `ALU_ADD : begin
+            `ALU_ADD: begin
                 tmp = a + b;
             end
-				`ALU_SUB : begin
+            `ALU_SUB: begin
                 tmp = a - b;
             end
-				`ALU_OR : begin
+            `ALU_OR: begin
                 tmp = a | b;
             end
-            `ALU_RLB : begin
-					for(i=0; i<imm; i=i+1) begin
-						tmp[i] = ~a[i];
-					end
-					for(i=imm; i<32; i=i+1) begin
-						tmp[i] = a[i];
-					end
-				end
-				`ALU_BNEZALC : begin
+            `ALU_RLB: begin
+                for(i = 0; i < imm; i = i + 1) begin
+                    tmp[i] = ~a[i];
+                end
+                for(i = imm; i < 32; i = i + 1) begin
+                    tmp[i] = a[i];
+                end
+            end
+            `ALU_BNEZALC: begin
                 tmp = a;
             end
             default: ; 
         endcase
     end
 	 
-	 assign ALUResult = tmp;
+	assign ALUResult = tmp;
     assign zero = (ALUResult == 0);
-	 assign bne_zero = (ALUResult == 0)&(ALUOp == `ALU_BNEZALC);
+	assign bne_zero = (ALUResult == 0) & (ALUOp == `ALU_BNEZALC);
                	
 endmodule
 

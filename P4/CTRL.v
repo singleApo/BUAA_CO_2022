@@ -35,45 +35,45 @@ module CTRL(
     );
     reg [14:0] tmp;
 
-    always@(*) begin
-		  if(op == 0 && func == 0) begin
+    always @(*) begin
+		if (op == 0 && func == 0) begin
             tmp <= 0;
         end
         else begin
             case (op)
                 6'b0 : begin
-                    if(func == `ADD) begin
+                    if (func == `ADD) begin
                        tmp <= 15'b1_01_0_0_00_000_000_00; 
                     end
-                    else if(func == `SUB) begin
+                    else if (func == `SUB) begin
                        tmp <= 15'b1_01_0_0_00_000_001_00; 
                     end
-                    else if(func == `JR) begin
+                    else if (func == `JR) begin
                        tmp <= 15'b0_00_0_0_00_011_000_00; 
                     end
                 end
-                `ORI : begin
+                `ORI: begin
                     tmp <= 15'b1_00_1_0_00_000_010_00;    
                 end
                 `LW: begin
                     tmp <= 15'b1_00_1_0_01_000_000_01;  
                 end
-                `SW : begin
+                `SW: begin
                     tmp <= 15'b0_00_1_1_00_000_000_01;  
                 end
-                `BEQ : begin
+                `BEQ: begin
                     tmp <= 15'b0_00_0_0_00_001_001_00;  
                 end
-                `LUI : begin
+                `LUI: begin
                     tmp <= 15'b1_00_1_0_00_000_000_10;  
                 end
-                `JAL : begin
+                `JAL: begin
                     tmp <= 15'b1_10_0_0_10_010_000_00;
-					 end
-					 `RLB : begin
+				end
+				`RLB: begin
                     tmp <= 15'b1_00_1_0_00_000_011_00;						  
                 end
-					 `BNEZALC : begin
+				`BNEZALC: begin
                     tmp <= 15'b1_10_0_0_10_100_100_00;						  
                 end
                 default: ; 
