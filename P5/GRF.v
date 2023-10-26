@@ -19,6 +19,7 @@
 //
 //////////////////////////////////////////////////////////////////////////////////
 `default_nettype none
+
 module GRF(
     input wire clk,
     input wire reset,
@@ -35,18 +36,18 @@ module GRF(
 
     integer i;
     initial begin
-      for(i=0; i<32; i=i+1) begin
-			GRF_reg[i] = 0;
-		end
+      for (i = 0; i < 32; i = i + 1) begin
+        GRF_reg[i] = 0;
+      end
     end
 
     always @(posedge clk) begin
-        if(reset) begin
-          for(i=0; i<32; i=i+1) begin
-			    GRF_reg[i] <= 0;
-		    end
+        if (reset) begin
+          for (i = 0; i < 32; i = i + 1) begin
+			      GRF_reg[i] <= 0;
+		      end
         end
-        else if(RegWrite == 1 && a3 > 0) begin
+        else if (RegWrite == 1 && a3 > 0) begin
             GRF_reg[a3] <= WD;
             $display("%d@%h: $%d <= %h", $time, pc, a3, WD);
         end

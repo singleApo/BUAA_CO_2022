@@ -27,34 +27,34 @@ module ALU(
     input wire [2:0] ALUOp,
     output wire [31:0] ALUOut
     );
-	 reg [31:0] tmp;
-	 reg [63:0] overflow;
+	reg [31:0] tmp;
+	reg [63:0] overflow;
 	 
-    always@(*) begin
+    always @(*) begin
 		case (ALUOp)
-			   `ALU_ADD : begin
+			`ALU_ADD: begin
                 tmp = a + b;
             end
-				`ALU_SUB : begin
+			`ALU_SUB: begin
                 tmp = a - b;
             end
-				`ALU_OR : begin
+			`ALU_OR: begin
                 tmp = a | b;
             end
-            `ALU_ADDEI : begin
-                overflow = {b[31],b[31:0]} + {a[31],a[31:0]};
-					 if(overflow[32] != overflow[31]) begin
-						tmp = b;
-					 end
-					 else begin
-						tmp = overflow[31:0];
-					 end
+            `ALU_ADDEI: begin
+                overflow = {b[31], b[31:0]} + {a[31], a[31:0]};
+                if (overflow[32] != overflow[31]) begin
+                    tmp = b;
+                end
+                else begin
+                    tmp = overflow[31:0];
+                end
             end
 				
             default: ; 
         endcase
     end
 	 
-	 assign ALUOut = tmp;
+	assign ALUOut = tmp;
 
 endmodule

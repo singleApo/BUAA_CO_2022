@@ -29,57 +29,57 @@ module CTRL(
     output wire ALUSrc,
     output wire MemWrite,
     output wire WDSrc1,
-	 output wire WDSrc2,
+	output wire WDSrc2,
     output wire [2:0] NPCOp,
     output wire [2:0] ALUOp,
     output wire [1:0] EXTOp,
-	 output wire [1:0] CMPOp,
-	 output wire [1:0] Tnew
+	output wire [1:0] CMPOp,
+	output wire [1:0] Tnew
     );
     reg [18:0] tmp;
 
-    always@(*) begin
-		  if(op == 0 && func == 0) begin
+    always @(*) begin
+		if (op == 0 && func == 0) begin
             tmp <= 0;
         end
         else begin
             case (op)
-                6'b0 : begin
-                    if(func == `ADD) begin
+                6'b0: begin
+                    if (func == `ADD) begin
                        tmp <= 19'b1_01_0_0_0_0_000_000_00_00_01; 
                     end
-                    else if(func == `SUB) begin
+                    else if (func == `SUB) begin
                        tmp <= 19'b1_01_0_0_0_0_000_001_00_00_01; 
                     end
-                    else if(func == `JR) begin
+                    else if (func == `JR) begin
                        tmp <= 19'b0_00_0_0_0_0_011_000_00_00_00; 
                     end
                 end
-                `ORI : begin
+                `ORI: begin
                     tmp <= 19'b1_00_1_0_0_0_000_010_00_00_01;    
                 end
-					 `LUI : begin
+				`LUI: begin
                     tmp <= 19'b1_00_1_0_0_0_000_000_10_00_01;  
                 end
                 `LW: begin
                     tmp <= 19'b1_00_1_0_0_1_000_000_01_00_10;  
                 end
-                `SW : begin
+                `SW: begin
                     tmp <= 19'b0_00_1_1_0_0_000_000_01_00_00;  
                 end
-                `BEQ : begin
+                `BEQ: begin
                     tmp <= 19'b0_00_0_0_0_0_001_000_00_00_00;  
                 end
-                `JAL : begin
+                `JAL: begin
                     tmp <= 19'b1_10_0_0_1_0_010_000_00_00_00;
-					 end
+				end
 					 
-					 `ADDEI : begin
+				`ADDEI: begin
                     tmp <= 19'b1_00_1_0_0_0_000_011_11_00_01;
-					 end
-					 `BIOAL : begin
+				end
+				`BIOAL : begin
                     tmp <= 19'b1_10_0_0_1_0_100_000_00_01_00;
-					 end
+				end
                 default: ; 
             endcase
         end

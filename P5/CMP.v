@@ -26,26 +26,27 @@ module CMP(
     input wire [31:0] c2,
     input wire [1:0] CMPOp,
     output wire zero,
-	 output wire overflow
+	output wire overflow
     );
     reg out;
-	 reg out2;
-	 reg [63:0] flag;
+	reg out2;
+	reg [63:0] flag;
 	 
-	 always@(*) begin
-		  case (CMPOp)
-			   `CMP_BEQ : begin
+	always @(*) begin
+		case (CMPOp)
+			`CMP_BEQ: begin
                 out = (c1 == c2);
-					 out2 = 1;
+				out2 = 1;
             end
-            `CMP_BIOAL : begin
-                flag = {c1[31],c1[31:0]} + {c2[31],c2[31:0]};
-					 out2 = (flag[32] != flag[31]);
+            `CMP_BIOAL: begin
+                flag = {c1[31], c1[31:0]} + {c2[31], c2[31:0]};
+				out2 = (flag[32] != flag[31]);
             end
             default: ; 
         endcase
     end
-	 assign zero = out;
-	 assign overflow = out2;
+
+	assign zero = out;
+	assign overflow = out2;
 
 endmodule

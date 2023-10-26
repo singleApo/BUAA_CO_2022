@@ -23,28 +23,27 @@ module ext(
     input [1:0] EOp,
     output reg [31:0] ext
     );
-	 reg high;
-	 always@(*) begin
-		  high = imm[15];
-		  case (EOp)
-				2'b00 : begin
-                if(high == 1) ext = {16'b1111111111111111,imm};
-					 else ext = {16'b0000000000000000,imm};
+	reg high;
+
+    always @(*) begin
+		high = imm[15];
+		case (EOp)
+			2'b00: begin
+                if (high == 1) ext = {16'b1111111111111111, imm};
+				else ext = {16'b0000000000000000, imm};
             end
-            2'b01 : begin
-                ext = {16'b0000000000000000,imm};
+            2'b01: begin
+                ext = {16'b0000000000000000, imm};
             end
-            2'b10 : begin
-                ext = {imm,16'b0000000000000000};
+            2'b10: begin
+                ext = {imm, 16'b0000000000000000};
             end
-            2'b11 :  begin
-                if(high == 1) ext = {16'b1111111111111111,imm} << 2;
-					 else ext = {16'b0000000000000000,imm} << 2;
+            2'b11:  begin
+                if (high == 1) ext = {16'b1111111111111111, imm} << 2;
+				else ext = {16'b0000000000000000, imm} << 2;
             end
             default: ; 
         endcase
     end
-
-
 
 endmodule

@@ -41,11 +41,11 @@ module tb;
 
 		// Wait 100 ns for global reset to finish
 		#100;
-      reset = 0;
+      	reset = 0;
 		// Add stimulus here
 		
 	end
-   always #5 clk = ~clk;
+    always #5 clk = ~clk;
 	 
 endmodule
 

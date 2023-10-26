@@ -28,24 +28,24 @@ module EXT(
     );
     reg [31:0] out;
 	 
-	 always@(*) begin
-		  case (EXTOp)
-			   `EXT_ZERO : begin
-                out = {16'h0000,Imm16};
+	always @(*) begin
+		case (EXTOp)
+			`EXT_ZERO: begin
+                out = {16'h0000, Imm16};
             end
-            `EXT_SIGN : begin
-                out = {{16{Imm16[15]}},Imm16};
+            `EXT_SIGN: begin
+                out = {{16{Imm16[15]}}, Imm16};
             end
-            `EXT_LUI : begin
-                out = {Imm16,16'h0000};
+            `EXT_LUI: begin
+                out = {Imm16, 16'h0000};
             end
-				`EXT_ONE : begin
-                out = {16'hffff,Imm16};
+			`EXT_ONE: begin
+                out = {16'hffff, Imm16};
             end
 
             default: ; 
         endcase
     end
-	 assign EXTOut = out;
+	assign EXTOut = out;
 
 endmodule

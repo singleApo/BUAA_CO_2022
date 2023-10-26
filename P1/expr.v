@@ -22,13 +22,13 @@
 `define S1 2'b01
 `define S2 2'b10
 `define S3 2'b11
+
 module expr(
     input [7:0] in,
     input clk,
     input clr,
     output out
     );
-
     reg [1:0] status;
 	 
     initial begin
@@ -36,65 +36,56 @@ module expr(
     end
 
     always @(posedge clk or posedge clr) begin
-        if(clr == 1) begin
+        if (clr == 1) begin
             status <= `S0;
         end
         else begin
-            case(status)
-            `S0 : begin
-                        if (in >= 48 && in <= 57) //0-9
-                        begin
-                            status <= `S1;
-                        end
-                        else if (in == 42 || in == 43) //+*
-                        begin
-                            status <= `S2;
-                        end
-                        else 
-                        begin
-                            status <= `S2; //¶ÔÓÚÒ»ÇÐ·ÇÕý³£Êä³ö£¬»Øµ½×´Ì¬2
-                        end
-                    end
+            case (status)
+            `S0: begin
+                if (in >= 48 && in <= 57) begin // 0-9
+                    status <= `S1;
+                end
+                else if (in == 42 || in == 43) begin    // +*
+                    status <= `S2;
+                end
+                else begin
+                    status <= `S2; // ï¿½ï¿½ï¿½ï¿½Ò»ï¿½Ð·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Øµï¿½×´Ì¬2
+                end
+            end
             
-            `S1 : begin
-                        if (in >= 48 && in <= 57)
-                        begin
-                            status <= `S2;
-                        end
-                        else if (in == 42 || in == 43)
-                        begin
-                            status <= `S3;
-                        end
-                        else 
-                        begin
-                            status <= `S2; 
-                        end
-                    end
+            `S1: begin
+                if (in >= 48 && in <= 57) begin
+                    status <= `S2;
+                end
+                else if (in == 42 || in == 43) begin
+                    status <= `S3;
+                end
+                else begin
+                    status <= `S2; 
+                end
+            end
             
-            `S2 : begin
-                        status <= `S2; 
-                    end
+            `S2: begin
+                status <= `S2; 
+            end
             
-            `S3 : begin
-                        if (in >= 48 && in <= 57)
-                        begin
-                            status <= `S1;
-                        end
-                        else if (in == 42 || in == 43)
-                        begin
-                            status <= `S2;
-                        end
-                        else 
-                        begin
-                            status <= `S2; 
-                        end
-                    end
-            default : status <= `S2;
+            `S3: begin
+                if (in >= 48 && in <= 57) begin
+                    status <= `S1;
+                end
+                else if (in == 42 || in == 43) begin
+                    status <= `S2;
+                end
+                else begin
+                    status <= `S2; 
+                end
+            end
+            default: status <= `S2;
             endcase
 		  end
 
     end
 	 
-	 assign out = (status == `S1)? 1 : 0;
+	assign out = (status == `S1) ? 1 : 0;
 
 endmodule
